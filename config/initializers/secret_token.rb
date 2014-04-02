@@ -14,17 +14,17 @@ require 'securerandom'
 def secure_token
   token_file = Rails.root.join('.secret')
   if File.exist?(token_file)
-    # Use existing token
+    # Use the existing token.
     File.read(token_file).chomp
   else
-    # Generate new token and store it in token_file
+    # Generate a new token and store it in token_file.
     token = SecureRandom.hex(64)
     File.write(token_file, token)
     token
   end
-
-  SampleApp::Application.config.secret_key_base = secure_token
 end
+
+SampleApp::Application.config.secret_key_base = secure_token
 
 
 # SampleApp::Application.config.secret_key_base = 'df2570b76bd728909469e40a316056cf84d5b085d4662feef1d49ea30bc5dcb012683122ef4be55cc4665a68520db07c3348c7e46440da4e1a34bb212a12b603'
