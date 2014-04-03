@@ -16,5 +16,5 @@
 /tmp
 
 # Ignore Rubymine
-/.idea
-/.idea/*
+.idea
+.idea/*
