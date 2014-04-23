@@ -11,7 +11,6 @@ describe "User pages" do
   end
 
   describe "profile page" do
-    # Replace with code to make a user variable
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user)}
 
@@ -27,6 +26,27 @@ describe "User pages" do
     describe 'with invalid information' do
       it "should not create a user" do
         expect { click_button submit }.not_to change(User, :count)
+      end
+
+      describe 'After submission' do
+        before { click_button submit}
+        it { should have_title('Sign up') }
+        it { should have_content('error') }
+        it { should have_selector('div.alert.alert-error')}
+      end
+
+      describe 'After submission with blank fields' do
+        before do
+          fill_in "Name",         with: " "
+          fill_in "Email",        with: " "
+          fill_in "Password",     with: " "
+          fill_in "Confirmation", with: " "
+          click_button submit
+        end
+
+        it { should have_content("Name can't be blank")}
+        it { should have_content("Email can't be blank")}
+        it { should have_content("Password can't be blank")}
       end
     end
 
